@@ -1,0 +1,125 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2758
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 SFProText-Bold;\f1\fnil\fcharset0 SFProText-Regular;\f2\fswiss\fcharset0 Helvetica;
+}
+{\colortbl;\red255\green255\blue255;\red66\green68\blue72;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c32549\c33725\c35294;\cssrgb\c0\c0\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs36 \cf0 CAE, PCA, LSTM and GRU for Binary Image Processing and Prediction
+\f1\b0\fs24 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 By Mukesh Dharanibalan | CID : 02107745 | email : md1021@ic.ac.uk\kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b \cf0 \ul \ulc0 Project Description:\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \ulnone \
+This module contains separate implementations of the training and testing of a CAE module with \
+10 layers in the encoder and decoder, comparisons with a PCA analysis of the same video,\
+an LSTM based Sequence to Sequence predictor and lastly a GRU Sequence to Sequence \
+predictor.\
+\
+This only works for binary videos due to the nature of implemented layers. The images are first compressed to 1/32 height and width of the videos. \
+\
+When training the CAE this is compared to the input to calculate loss and take a step in the optimiser.\
+\
+When training the LSTM/GRU the 12 input frames are compressed, used to predict the next 4 and compared to the remaining 4 target frames to calculate the loss in batches of 3 and optimisation steps then taken. \
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97
+\f0\b \ul \
+Build Status (v1.0):
+\f1\b0 \ulnone \
+\
+The current build v1.0.0 comes with:\
+\
+-  CAEFinal.py : data loading, training and evaluation of a CAE\
+- PCA.py : data loading, and PCA analysis of a chosen video from the given data-set, and comparisons with the trained CAE model\
+- Sequence2SequenceLSTM.py : data loading, training and evaluation of a LSTM+Decoding model\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 - Sequence2SequenceGRU.py : data loading, training and evaluation of a GRU+Decoding model\\\
+\
+Models:\
+- best_model.pth : best CAE model\
+- bestGRU.pth : best GRU+Decoder Model (uses best CAE for encoding)\
+- bestLSTM_batch1.pth : best LSTM+Decoder (batch_size = 1) (uses best CAE for encoding)\
+- bestLSTM_batch4.pth : best LSTM+Decoder (batch_size = 4) (uses best CAE for encoding)\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+Further extension may be done by including gradient thresholds during sampling/prediction. when sampling this would prevent smearing and allow the binary features to be preserved more accurately. \
+\
+During prediction, setting gradient thresholds would mean that for binary frames that the sliding window/Kernel of the LSTM is able to skip over certain areas with high mean luminence, as they will not decrease, thereby reducing load and possibly increasing accuracy.\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b \cf0 \ul Code Style and Framework:\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \ulnone \
+This project strictly follows standard PEP-8 formatting and convention. It requiresunderstanding of matplotlib, numpy, scikit, and pytorch libaries.\
+\
+All functions/numerical methods are modulated and grouped based on their objectives and are self explanatory given ample knowledge of numerical methods.\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b \cf0 \ul How to use:\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \ulnone Simply running each labelled code on spyder, or vscode appropriately in a jupyter interactive will produce all the desired results:\
+\
+during training, losses at each epoch are shown; during testing losses using different metrics are evaluated for the chosen dataset, and outputs are plotted for visual conformation against the target output.
+\f0\b \ul \
+\
+
+\f1\b0 \ulnone PCA produces a scree-plot which clearly shows the threshold of the spatial-dimensionality of the CAE\
+thereby clearly showing significant data-loss  at that threshold when using PCA due to the larger number of features seen in these datasets.\
+\
+CAE produces binary-image plots for CAE-processed data, and target (inputs itself) data.\
+\
+LSTM, and GRU produce Self explanatory binary-image plots which can be used to evaluate method clearly.\
+\
+Studies on computational time of processing/training are still in progress.\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b \cf0 \ul Credits:\
+\
+\pard\pardeftab720\parhyphenfactor20\partightenfactor0
+
+\f2\b0\fs28 \cf2 \expnd0\expndtw0\kerning0
+\ulnone [1]\cf0 \
+\cf2 A. Dertat, \'93Applied Deep Learning - Part 3: Autoencoders,\'94 Oct. 03, 2017. https://towardsdatascience.com/applied-deep-learning-part-3-autoencoders-1c083af4d798.\
+\cf0 \
+\cf2 [2]\cf0 \
+\cf2 D. Herkert, \'93Multivariate Time Series Forecasting with Deep Learning,\'94 Jan. 07, 2022. https://towardsdatascience.com/multivariate-time-series-forecasting-with-deep-learning-3e7b3e2d2bcf.\
+\cf0 \
+\cf2 [3]\cf0 \
+\cf2 M. Brems, \'93A One-Stop Shop for Principal Component Analysis,\'94 Apr. 17, 2017. https://towardsdatascience.com/a-one-stop-shop-for-principal-component-analysis-5582fb7e0a9c.
+\f0\b\fs24 \cf0 \kerning1\expnd0\expndtw0 \ul \ulc0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f1\b0 \cf0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \expnd0\expndtw0\kerning0
+\ulnone \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b \cf0 Libraries:\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0 \cf0 matplotlib.pyplot\
+numpy\
+torch\
+scikit\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97}
